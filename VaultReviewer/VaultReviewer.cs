@@ -10,12 +10,14 @@ namespace VaultReviewer
     {
         public VaultReviewerData mData;        
         private const string DataFileName = "data.json";
+        private const string ConfigFileName = "config.json";
         private Form1 mMainForm;
-        private const int ReviewsPerDay = 2;
+        private int ReviewsPerDay = 2;
 
         public VaultReviewer(Form1 mainForm)
         {
             mMainForm = mainForm;
+            LoadConfig();
             LoadData();
         }
 
@@ -79,6 +81,45 @@ namespace VaultReviewer
         public string GetDataFilePath()
         {
             return Path.Combine(GetDataFolderPath(), DataFileName);
+        }
+
+        public string GetConfigFilePath()
+        {
+            return Path.Combine(GetDataFolderPath(), ConfigFileName);
+        }
+
+        private void CreateConfigFile()
+        {
+            Directory.CreateDirectory(GetDataFolderPath());
+            Config config = new Config();
+            string json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(GetConfigFilePath(), json);
+            LoadConfig();
+        }
+
+        private void LoadConfig()
+        {
+            if (File.Exists(GetConfigFilePath()))
+            {
+                //Just load data
+                string path = GetConfigFilePath();
+                string json = File.ReadAllText(GetConfigFilePath());
+                Config config = JsonSerializer.Deserialize<Config>(json);
+                if (config != null)
+                {
+                    ReviewsPerDay = config.ReviewsPerDay;
+                }
+                else
+                {
+                    MessageBox.Show("Something wrong when loading the config, the config file will be regenerated");
+                    File.Delete(GetConfigFilePath());
+                    CreateConfigFile();
+                }
+            }
+            else
+            {
+                CreateConfigFile();
+            }
         }
 
         private void LoadData()
