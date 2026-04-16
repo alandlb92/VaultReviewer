@@ -8,13 +8,14 @@ using VaultReviewer.Forms;
 
 namespace VaultReviewer.Core
 {
-    internal class VaultReviewer
+    public class VaultReviewer
     {
         public VaultReviewerData mData;        
         private const string DataFileName = "data.json";
         private const string ConfigFileName = "config.json";
         private ReviewDashboard mMainForm;
         private int ReviewsPerDay = 2;
+        private string UserName = "";
 
         public VaultReviewer(ReviewDashboard mainForm)
         {
@@ -99,6 +100,19 @@ namespace VaultReviewer.Core
             LoadConfig();
         }
 
+        public void SaveConfig(int reviewsPerDay, string userName)
+        {
+            ReviewsPerDay = reviewsPerDay;
+            UserName = userName;
+            Config config = new Config { ReviewsPerDay = reviewsPerDay, UserName = userName };
+            string json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(GetConfigFilePath(), json);
+        }
+
+        public int GetReviewsPerDay() => ReviewsPerDay;
+        public string GetUserName() => UserName;
+        public string GetDisplayTitle() => string.IsNullOrWhiteSpace(UserName) ? "Homework" : $"{UserName}'s Homework";
+
         private void LoadConfig()
         {
             if (File.Exists(GetConfigFilePath()))
@@ -110,6 +124,7 @@ namespace VaultReviewer.Core
                 if (config != null)
                 {
                     ReviewsPerDay = config.ReviewsPerDay;
+                    UserName = config.UserName ?? "";
                 }
                 else
                 {
