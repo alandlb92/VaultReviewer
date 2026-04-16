@@ -31,13 +31,31 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             notifyIcon1 = new NotifyIcon(components);
+            trayContextMenu = new ContextMenuStrip(components);
+            menuItemOpen = new ToolStripMenuItem();
+            menuItemQuit = new ToolStripMenuItem();
             SuspendLayout();
-            // 
+            //
+            // menuItemOpen
+            //
+            menuItemOpen.Text = "Open";
+            menuItemOpen.Click += menuItemOpen_Click;
+            //
+            // menuItemQuit
+            //
+            menuItemQuit.Text = "Quit";
+            menuItemQuit.Click += menuItemQuit_Click;
+            //
+            // trayContextMenu
+            //
+            trayContextMenu.Items.AddRange(new ToolStripItem[] { menuItemOpen, menuItemQuit });
+            //
             // notifyIcon1
-            // 
+            //
             notifyIcon1.Icon = (Icon)resources.GetObject("notifyIcon1.Icon");
             notifyIcon1.Text = "Vault Viewer";
             notifyIcon1.Visible = true;
+            notifyIcon1.ContextMenuStrip = trayContextMenu;
             notifyIcon1.MouseDoubleClick += notifyIcon1_MouseDoubleClick;
             // 
             // Form1
@@ -61,5 +79,8 @@
         #endregion
 
         private NotifyIcon notifyIcon1;
+        private ContextMenuStrip trayContextMenu;
+        private ToolStripMenuItem menuItemOpen;
+        private ToolStripMenuItem menuItemQuit;
     }
 }
