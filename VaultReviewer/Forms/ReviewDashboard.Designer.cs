@@ -1,6 +1,6 @@
-﻿namespace VaultReviewer
+﻿namespace VaultReviewer.Forms
 {
-    partial class Form1
+    partial class ReviewDashboard
     {
         /// <summary>
         ///  Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReviewDashboard));
             notifyIcon1 = new NotifyIcon(components);
             trayContextMenu = new ContextMenuStrip(components);
             menuItemOpen = new ToolStripMenuItem();
@@ -58,8 +58,8 @@
             notifyIcon1.ContextMenuStrip = trayContextMenu;
             notifyIcon1.MouseDoubleClick += notifyIcon1_MouseDoubleClick;
             // 
-            // Form1
-            // 
+            // ReviewDashboard
+            //
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
@@ -70,9 +70,9 @@
             MaximizeBox = false;
             MdiChildrenMinimizedAnchorBottom = false;
             MinimizeBox = false;
-            Name = "Form1";
+            Name = "ReviewDashboard";
             Text = "Alan's Homework";
-            Load += Form1_Load;
+            Load += ReviewDashboard_Load;
             ResumeLayout(false);
         }
 

@@ -4,17 +4,19 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 
-namespace VaultReviewer
+using VaultReviewer.Forms;
+
+namespace VaultReviewer.Core
 {
     internal class VaultReviewer
     {
         public VaultReviewerData mData;        
         private const string DataFileName = "data.json";
         private const string ConfigFileName = "config.json";
-        private Form1 mMainForm;
+        private ReviewDashboard mMainForm;
         private int ReviewsPerDay = 2;
 
-        public VaultReviewer(Form1 mainForm)
+        public VaultReviewer(ReviewDashboard mainForm)
         {
             mMainForm = mainForm;
             LoadConfig();

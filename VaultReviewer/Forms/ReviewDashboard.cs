@@ -1,18 +1,20 @@
 using Microsoft.Win32;
+using VaultReviewer.Core;
+using ReviewEngine = VaultReviewer.Core.VaultReviewer;
 
-namespace VaultReviewer
+namespace VaultReviewer.Forms
 {
-    public partial class Form1 : Form
+    public partial class ReviewDashboard : Form
     {
-        VaultReviewer mVaultReviewer;
-        public Form1()
+        ReviewEngine mVaultReviewer;
+        public ReviewDashboard()
         {
             if(!IsOnStartup())
             {
                 RegisterStartup();
             }
 
-            mVaultReviewer = new VaultReviewer(this);
+            mVaultReviewer = new ReviewEngine(this);
             InitializeComponent();
             WindowState = FormWindowState.Minimized;
             ShowInTaskbar = false;
@@ -90,7 +92,7 @@ namespace VaultReviewer
             Activate();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void ReviewDashboard_Load(object sender, EventArgs e)
         {
 
         }
