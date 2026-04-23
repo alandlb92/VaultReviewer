@@ -17,6 +17,11 @@ namespace VaultReviewer.Forms
             txtUserName      = new TextBox();
             lblReviewsPerDay = new Label();
             nudReviewsPerDay = new NumericUpDown();
+            lblIgnored       = new Label();
+            lstIgnored       = new ListBox();
+            btnAddFolder     = new Button();
+            btnAddFile       = new Button();
+            btnRemove        = new Button();
             btnSave          = new Button();
             ((System.ComponentModel.ISupportInitialize)nudReviewsPerDay).BeginInit();
             SuspendLayout();
@@ -53,6 +58,59 @@ namespace VaultReviewer.Forms
             nudReviewsPerDay.Size        = new Size(60, 26);
             nudReviewsPerDay.Location    = new Point(184, 63);
 
+            // lblIgnored
+            lblIgnored.Text      = "Ignored folders / files";
+            lblIgnored.ForeColor = Color.FromArgb(166, 173, 200);
+            lblIgnored.Font      = new Font("Segoe UI", 9.5F);
+            lblIgnored.AutoSize  = true;
+            lblIgnored.Location  = new Point(24, 105);
+
+            // lstIgnored
+            lstIgnored.BackColor            = Color.FromArgb(49, 50, 68);
+            lstIgnored.ForeColor            = Color.FromArgb(205, 214, 244);
+            lstIgnored.Font                 = new Font("Segoe UI", 9F);
+            lstIgnored.BorderStyle          = BorderStyle.FixedSingle;
+            lstIgnored.Size                 = new Size(238, 110);
+            lstIgnored.Location             = new Point(24, 125);
+            lstIgnored.HorizontalScrollbar  = true;
+            lstIgnored.ScrollAlwaysVisible  = true;
+
+            // btnAddFolder
+            btnAddFolder.Text                              = "+ Folder";
+            btnAddFolder.FlatStyle                         = FlatStyle.Flat;
+            btnAddFolder.FlatAppearance.BorderColor        = Color.FromArgb(166, 173, 200);
+            btnAddFolder.FlatAppearance.MouseOverBackColor = Color.FromArgb(49, 50, 68);
+            btnAddFolder.ForeColor                         = Color.FromArgb(166, 173, 200);
+            btnAddFolder.Font                              = new Font("Segoe UI", 9F);
+            btnAddFolder.Size                              = new Size(74, 26);
+            btnAddFolder.Location                          = new Point(24, 242);
+            btnAddFolder.Cursor                            = Cursors.Hand;
+            btnAddFolder.Click                            += btnAddFolder_Click;
+
+            // btnAddFile
+            btnAddFile.Text                              = "+ File";
+            btnAddFile.FlatStyle                         = FlatStyle.Flat;
+            btnAddFile.FlatAppearance.BorderColor        = Color.FromArgb(166, 173, 200);
+            btnAddFile.FlatAppearance.MouseOverBackColor = Color.FromArgb(49, 50, 68);
+            btnAddFile.ForeColor                         = Color.FromArgb(166, 173, 200);
+            btnAddFile.Font                              = new Font("Segoe UI", 9F);
+            btnAddFile.Size                              = new Size(64, 26);
+            btnAddFile.Location                          = new Point(104, 242);
+            btnAddFile.Cursor                            = Cursors.Hand;
+            btnAddFile.Click                            += btnAddFile_Click;
+
+            // btnRemove
+            btnRemove.Text                              = "Remove";
+            btnRemove.FlatStyle                         = FlatStyle.Flat;
+            btnRemove.FlatAppearance.BorderColor        = Color.FromArgb(243, 139, 168);
+            btnRemove.FlatAppearance.MouseOverBackColor = Color.FromArgb(49, 50, 68);
+            btnRemove.ForeColor                         = Color.FromArgb(243, 139, 168);
+            btnRemove.Font                              = new Font("Segoe UI", 9F);
+            btnRemove.Size                              = new Size(68, 26);
+            btnRemove.Location                          = new Point(194, 242);
+            btnRemove.Cursor                            = Cursors.Hand;
+            btnRemove.Click                            += btnRemove_Click;
+
             // btnSave
             btnSave.Text                              = "Save";
             btnSave.FlatStyle                         = FlatStyle.Flat;
@@ -61,7 +119,7 @@ namespace VaultReviewer.Forms
             btnSave.ForeColor                         = Color.FromArgb(137, 180, 250);
             btnSave.Font                              = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             btnSave.Size                              = new Size(80, 30);
-            btnSave.Location                          = new Point(103, 108);
+            btnSave.Location                          = new Point(103, 280);
             btnSave.Cursor                            = Cursors.Hand;
             btnSave.Click                            += btnSave_Click;
 
@@ -69,13 +127,13 @@ namespace VaultReviewer.Forms
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode       = AutoScaleMode.Font;
             BackColor           = Color.FromArgb(30, 30, 46);
-            ClientSize          = new Size(286, 158);
+            ClientSize          = new Size(286, 326);
             FormBorderStyle     = FormBorderStyle.FixedDialog;
             MaximizeBox         = false;
             MinimizeBox         = false;
             StartPosition       = FormStartPosition.CenterParent;
             Text                = "Settings";
-            Controls.AddRange(new Control[] { lblUserName, txtUserName, lblReviewsPerDay, nudReviewsPerDay, btnSave });
+            Controls.AddRange(new Control[] { lblUserName, txtUserName, lblReviewsPerDay, nudReviewsPerDay, lblIgnored, lstIgnored, btnAddFolder, btnAddFile, btnRemove, btnSave });
             ((System.ComponentModel.ISupportInitialize)nudReviewsPerDay).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -85,6 +143,11 @@ namespace VaultReviewer.Forms
         private TextBox       txtUserName;
         private Label         lblReviewsPerDay;
         private NumericUpDown nudReviewsPerDay;
+        private Label         lblIgnored;
+        private ListBox       lstIgnored;
+        private Button        btnAddFolder;
+        private Button        btnAddFile;
+        private Button        btnRemove;
         private Button        btnSave;
     }
 }

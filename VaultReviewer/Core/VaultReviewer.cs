@@ -16,6 +16,7 @@ namespace VaultReviewer.Core
         private ReviewDashboard mMainForm;
         private int ReviewsPerDay = 2;
         private string UserName = "";
+        private List<string> IgnoredPaths = new();
 
         public VaultReviewer(ReviewDashboard mainForm)
         {
@@ -26,7 +27,26 @@ namespace VaultReviewer.Core
 
         public List<String> ScanVault()
         {
-            return Directory.GetFiles(mData.VaultNamePath, "*.md*", SearchOption.AllDirectories).ToList();
+            return Directory.GetFiles(mData.VaultNamePath, "*.md*", SearchOption.AllDirectories)
+                .Where(f => !IsIgnored(f))
+                .ToList();
+        }
+
+        private bool IsIgnored(string filePath)
+        {
+            foreach (var ignored in IgnoredPaths)
+            {
+                if (Directory.Exists(ignored))
+                {
+                    string dir = ignored.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+                                + Path.DirectorySeparatorChar;
+                    if (filePath.StartsWith(dir, StringComparison.OrdinalIgnoreCase))
+                        return true;
+                }
+                else if (filePath.Equals(ignored, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
         }
 
         public void DrawReviews()
@@ -104,13 +124,22 @@ namespace VaultReviewer.Core
         {
             ReviewsPerDay = reviewsPerDay;
             UserName = userName;
-            Config config = new Config { ReviewsPerDay = reviewsPerDay, UserName = userName };
+            Config config = new Config { ReviewsPerDay = reviewsPerDay, UserName = userName, IgnoredPaths = IgnoredPaths };
+            string json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(GetConfigFilePath(), json);
+        }
+
+        public void SaveIgnoredPaths(List<string> paths)
+        {
+            IgnoredPaths = paths;
+            Config config = new Config { ReviewsPerDay = ReviewsPerDay, UserName = UserName, IgnoredPaths = IgnoredPaths };
             string json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(GetConfigFilePath(), json);
         }
 
         public int GetReviewsPerDay() => ReviewsPerDay;
         public string GetUserName() => UserName;
+        public List<string> GetIgnoredPaths() => new List<string>(IgnoredPaths);
         public string GetDisplayTitle() => string.IsNullOrWhiteSpace(UserName) ? "Homework" : $"{UserName}'s Homework";
 
         private void LoadConfig()
@@ -125,6 +154,7 @@ namespace VaultReviewer.Core
                 {
                     ReviewsPerDay = config.ReviewsPerDay;
                     UserName = config.UserName ?? "";
+                    IgnoredPaths = config.IgnoredPaths ?? new();
                 }
                 else
                 {

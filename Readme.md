@@ -1,44 +1,70 @@
 # VaultReviewer
 
-VaultReviewer is a lightweight tray utility designed to support daily study and knowledge review workflows.
-
-The tool scans an Obsidian vault and randomly selects a Markdown file (`.md`) for review each day. It keeps track of recently reviewed files to ensure that the same document is not repeated until all other files in the vault have been reviewed.
-
-This guarantees a complete review cycle across your knowledge base before restarting.
+A lightweight Windows tray app that picks a random set of Markdown files from your [Obsidian](https://obsidian.md) vault every day and asks you to review them — so you gradually revisit everything you've ever written, without repeating yourself until the full cycle is complete.
 
 ## Features
 
-- Scans a selected Obsidian vault
-- Randomly selects a document for daily review
-- Prevents repetition until all documents have been reviewed
-- Stores review history locally
-- Runs silently in the system tray
-- Automatically resumes review progress between sessions
+- Randomly selects N files from your vault each day
+- Tracks review history — a file won't appear again until every other file has been seen
+- Checkbox UI to mark each file as reviewed
+- Ignore list — exclude specific folders or files from the selection pool
+- Configurable number of daily reviews and display name
+- Lives in the system tray; starts with Windows automatically
+- Dark theme (Catppuccin Mocha)
 
-## How it works
+## Requirements
 
-1. Select your Obsidian vault directory
-2. The application scans all `.md` files
-3. A file is randomly selected for review
-4. Reviewed files are tracked
-5. Files are not repeated until the full vault has been covered
+- Windows 10/11
+- [.NET 10 Runtime](https://dotnet.microsoft.com/download/dotnet/10.0) (or use the self-contained publish)
 
-Once every file has been reviewed, a new cycle begins automatically.
+## Getting Started
 
-## Purpose
+1. Launch the app — on first run it will ask you to select your Obsidian vault folder.
+2. The main window shows today's picks as checkboxes. Check them off as you review each file.
+3. The window hides to the tray when closed; double-click the tray icon to reopen it.
 
-VaultReviewer was created as a personal study-support tool to reinforce long-term retention by encouraging continuous exposure to previously written notes.
+## Settings
 
-It is especially useful for developers, students, and knowledge workers maintaining structured note systems inside an Obsidian vault.
+Click the ⚙ button to open Settings:
 
-## Future improvements (planned)
+| Option | Description |
+|--------|-------------|
+| Your name | Personalizes the window title to `{Name}'s Homework` |
+| Reviews per day | How many files are picked each day (default: 5) |
+| Ignored folders / files | Paths excluded from the selection pool — add entire folders or individual files |
 
-- Configurable number of daily review files (now it's just 2)
-- Daily notification reminders
-- Review statistics
-- Multiple vault support
-- Optional spaced repetition logic
+Changes take effect the next time daily picks are drawn.
 
-## License
+## Data
 
-Personal utility project. License may be added later.
+All state is stored in `%APPDATA%\VaultReviewer\`:
+
+| File | Contents |
+|------|----------|
+| `data.json` | Vault path, today's picks, review history |
+| `config.json` | `ReviewsPerDay`, `UserName`, `IgnoredPaths` |
+
+## Building
+
+```bash
+# Debug build
+dotnet build VaultReviewer/VaultReviewer.csproj
+
+# Run
+dotnet run --project VaultReviewer/VaultReviewer.csproj
+```
+
+## Publishing
+
+Run `publish.bat` as Administrator (it self-elevates) and enter the destination folder when prompted. The script clears the folder before publishing so the output is always clean.
+
+```
+publish.bat
+> Destination folder: C:\Program Files\VaultReviewer
+```
+
+Or manually:
+
+```bash
+dotnet publish VaultReviewer/VaultReviewer.csproj -c Release -o <destination>
+```

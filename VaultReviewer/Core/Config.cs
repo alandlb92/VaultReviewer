@@ -8,5 +8,6 @@ namespace VaultReviewer.Core
     {
         public int ReviewsPerDay { get; set; } = 5;
         public string UserName { get; set; } = "";
+        public List<string> IgnoredPaths { get; set; } = new();
     }
 }

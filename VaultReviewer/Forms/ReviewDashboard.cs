@@ -46,7 +46,7 @@ namespace VaultReviewer.Forms
             WindowState = FormWindowState.Normal;
             BringToFront();
 
-            using var dialog = new FolderBrowserDialog { Description = "Selecione a pasta do Vault" };
+            using var dialog = new FolderBrowserDialog { Description = "Select your Obsidian vault folder" };
             if (dialog.ShowDialog() == DialogResult.OK)
                 onVaultIsSet(dialog.SelectedPath);
         }

@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Language
+
+All code, comments, UI strings, variable names, file names, and any other text in this project must be written in English. No exceptions.
+
 ## Commands
 
 ```bash
